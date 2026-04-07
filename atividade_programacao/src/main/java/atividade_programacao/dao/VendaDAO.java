@@ -12,13 +12,14 @@ import atividade_programacao.model.VendaModel;
 public class VendaDAO {
 
     public boolean salvar(VendaModel venda) {
-        String sqlVenda = "INSERT INTO venda (valor_total, data_venda, produto_id, cliente_id) VALUES (?, ?, ?, ?)";
+        String sqlVenda = "INSERT INTO venda (id, valor_total, data_venda, produto_id, cliente_id) VALUES (?, ?, ?, ?, ?)";
         String sqlEstoque = "UPDATE produto SET qtd_estoque = qtd_estoque - ? WHERE id = ? AND qtd_estoque >= ?";
         String sqlVerificaEstoque = "SELECT qtd_estoque FROM produto WHERE id = ?";
 
         try (Connection con = Conexao.getConnection()) {
             con.setAutoCommit(false);
 
+            // Verifica estoque
             try (PreparedStatement psEstoqueCheck = con.prepareStatement(sqlVerificaEstoque)) {
                 psEstoqueCheck.setInt(1, venda.getProduto().getId());
 
@@ -36,11 +37,13 @@ public class VendaDAO {
                 }
             }
 
+            // Insere venda (COM ID MANUAL)
             try (PreparedStatement stmtVenda = con.prepareStatement(sqlVenda)) {
-                stmtVenda.setDouble(1, venda.getValor_total());
-                stmtVenda.setDate(2, new java.sql.Date(venda.getData_venda().getTime()));
-                stmtVenda.setInt(3, venda.getProduto().getId());
-                stmtVenda.setInt(4, venda.getCliente().getId());
+                stmtVenda.setInt(1, venda.getId());
+                stmtVenda.setDouble(2, venda.getValor_total());
+                stmtVenda.setDate(3, new java.sql.Date(venda.getData_venda().getTime()));
+                stmtVenda.setInt(4, venda.getProduto().getId());
+                stmtVenda.setInt(5, venda.getCliente().getId());
 
                 if (stmtVenda.executeUpdate() <= 0) {
                     con.rollback();
@@ -48,6 +51,7 @@ public class VendaDAO {
                 }
             }
 
+            // Atualiza estoque
             try (PreparedStatement stmtEstoque = con.prepareStatement(sqlEstoque)) {
                 stmtEstoque.setDouble(1, 1);
                 stmtEstoque.setInt(2, venda.getProduto().getId());

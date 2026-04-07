@@ -10,19 +10,19 @@ import atividade_programacao.model.ClienteModel;
 public class ClienteDAO {
 
     public boolean salvar(ClienteModel cliente) {
-        String sql = "INSERT INTO cliente (nome, cpf, rg, endereco, telefone) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cliente (id, nome, cpf, rg, endereco, telefone) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection con = Conexao.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getCpf());
-            stmt.setString(3, cliente.getRg());
-            stmt.setString(4, cliente.getEndereco());
-            stmt.setString(5, cliente.getTelefone());
+            stmt.setInt(1, cliente.getId());
+            stmt.setString(2, cliente.getNome());
+            stmt.setString(3, cliente.getCpf());
+            stmt.setString(4, cliente.getRg());
+            stmt.setString(5, cliente.getEndereco());
+            stmt.setString(6, cliente.getTelefone());
 
             return stmt.executeUpdate() > 0;
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -43,7 +43,6 @@ public class ClienteDAO {
             stmt.setInt(6, cliente.getId());
 
             return stmt.executeUpdate() > 0;
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -58,7 +57,6 @@ public class ClienteDAO {
 
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -85,7 +83,6 @@ public class ClienteDAO {
                     return cliente;
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
