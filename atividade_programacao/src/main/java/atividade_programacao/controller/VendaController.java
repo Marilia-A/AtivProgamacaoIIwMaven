@@ -52,4 +52,8 @@ public class VendaController {
     public VendaModel pesquisar(int id) {
         return vendaDAO.pesquisar(id);
     }
+
+    public int contarVendasPorCliente(int clienteId) {
+        return vendaDAO.contarVendasPorCliente(clienteId);
+    }
 }
