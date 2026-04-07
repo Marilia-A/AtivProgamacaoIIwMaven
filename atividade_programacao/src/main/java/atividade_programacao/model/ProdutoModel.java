@@ -4,7 +4,7 @@ public class ProdutoModel {
     private int id;
     private String nome;
     private double preco;
-    private double qtde_estoque;
+    private double qtd_estoque;
     private FornecedorModel fornecedor;
     private CategoriaModel categoria;
 
@@ -27,11 +27,11 @@ public class ProdutoModel {
     public void setPreco(double preco) {
         this.preco = preco;
     }
-    public double getQtde_estoque() {
-        return qtde_estoque;
+    public double getQtd_estoque() {
+        return qtd_estoque;
     }
-    public void setQtde_estoque(double qtde_estoque) {
-        this.qtde_estoque = qtde_estoque;
+    public void setQtd_estoque(double qtde_estoque) {
+        this.qtd_estoque = qtde_estoque;
     }
     public FornecedorModel getFornecedor() {
         return fornecedor;
@@ -53,7 +53,7 @@ public class ProdutoModel {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
-        this.qtde_estoque = qtde_estoque;
+        this.qtd_estoque = qtde_estoque;
         this.fornecedor = fornecedor;
         this.categoria = categoria;
     }
